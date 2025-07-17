@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -146,4 +147,14 @@ IPGEOLOCATION_SETTINGS = {
     'API_KEY': 'your_api_key_here',
     'LANGUAGE': 'en',
     'TIMEOUT': 10,
+}
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Or your broker URL
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TIMEZONE = 'UTC'
+CELERY_BEAT_SCHEDULE = {
+    'detect-suspicious-ips-hourly': {
+        'task': 'ip_tracking.tasks.detect_suspicious_ips',
+        'schedule': crontab(minute=0),  # Run hourly at :00
+    },
 }
