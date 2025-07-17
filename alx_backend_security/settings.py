@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ip_tracking',
     'ipgeolocation',
+    'django_ratelimit',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,21 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Rate limiting configuration
+RATELIMIT_ENABLE = True  # Enable rate limiting globally
+RATELIMIT_VIEW = 'ip_tracking.views.rate_limit_exceeded'  # Custom view for rate limit exceeded
+
+# Default rate limits (can be overridden per-view)
+RATELIMIT_DEFAULT = '5/m'  # Default rate for anonymous users
+RATELIMIT_AUTHENTICATED = '10/m'  # Default rate for authenticated users
+
+# Cache configuration for rate limiting
+RATELIMIT_USE_CACHE = 'default'
+
+# IP Geolocation settings (from previous objective)
+IPGEOLOCATION_SETTINGS = {
+    'API_KEY': 'your_api_key_here',
+    'LANGUAGE': 'en',
+    'TIMEOUT': 10,
+}
