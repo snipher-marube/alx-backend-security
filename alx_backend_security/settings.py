@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+IPGEOLOCATION_SETTINGS = {
+    'API_KEY': 'your_api_key_here',  # Get one from https://ipgeolocation.io/
+    'LANGUAGE': 'en',
+    'TIMEOUT': 10,
+}
 
 # Application definition
 
@@ -37,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ip_tracking'
+    'ip_tracking',
+    'ipgeolocation',
 ]
 
 MIDDLEWARE = [
